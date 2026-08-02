@@ -1,0 +1,40 @@
+generated: '2026-07-21'
+method: probed
+source: live probes of https://ttracing.my/.well-known/* and /llms.txt
+host: ttracing.my
+entries:
+- path: /.well-known/openid-configuration
+  status: 200
+  content_type: application/json
+  file: ttracing-openid-configuration.json
+  type: WellKnown
+  note: >-
+    Shopify customer-accounts OpenID Connect discovery. Issuer is
+    https://shopify.com/authentication/20219723 (platform-provided, not a
+    first-party TTRacing identity provider).
+- path: /.well-known/oauth-authorization-server
+  status: 200
+  content_type: application/json
+  file: ttracing-oauth-authorization-server.json
+  type: WellKnown
+  note: Shopify customer-accounts OAuth 2.0 authorization-server metadata (RFC 8414).
+- path: /.well-known/ucp
+  status: 200
+  content_type: application/json
+  file: ttracing-ucp.json
+  type: WellKnown
+  note: >-
+    Universal Commerce Protocol (UCP) merchant discovery document. Advertises
+    UCP shopping services (transport: mcp) at
+    https://ttracing.myshopify.com/api/ucp/mcp, versions 2026-04-08 and
+    2026-01-23, capabilities (cart/checkout/fulfillment/discount/order/catalog),
+    and payment handlers (Google Pay, Shopify card).
+- path: /.well-known/security.txt
+  status: 404
+  note: No security.txt published (RFC 9116 absent).
+- path: /.well-known/api-catalog
+  status: 404
+  note: No RFC 9727 api-catalog published.
+- path: /.well-known/ai-plugin.json
+  status: 404
+  note: No ai-plugin.json published.

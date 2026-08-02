@@ -1,0 +1,60 @@
+generated: '2026-07-21'
+method: searched
+source: https://ttracing.my/llms.txt and https://ttracing.my/agents.md (probed 2026-07-21)
+scope: >-
+  Cross-cutting conventions for programmatic and agent interaction with the
+  TTRacing Shopify storefront. This store exposes an agent-commerce surface
+  (UCP) rather than a first-party developer API.
+auth_style: >-
+  Read-only browsing endpoints require no authentication. Transactional agent
+  commerce goes through the UCP MCP endpoint, which requires a UCP agent-profile
+  discovery handshake. Human-customer login uses Shopify customer accounts
+  (OpenID Connect / OAuth 2.0; see well-known/).
+versioning:
+  style: dated
+  channel: UCP protocol version
+  values:
+  - '2026-04-08'
+  - '2026-01-23'
+  note: >-
+    Version is negotiated via the /.well-known/ucp discovery document; there is
+    no separate TTRacing API version.
+rate_limiting:
+  signaled: true
+  mechanism: HTTP 429
+  guidance: MCP endpoint is rate-limited per IP; agents must back off on 429.
+buyer_approval:
+  required: true
+  note: >-
+    complete_checkout must not finalize payment without explicit,
+    contemporaneous buyer consent (UCP buyer-approval invariant).
+context_parameters:
+- context.address_country
+- context.currency
+read_only_browsing:
+  auth_required: false
+  endpoints:
+  - GET /collections/all
+  - GET /products/{handle}
+  - GET /products/{handle}.json
+  - GET /collections/{handle}
+  - GET /collections/{handle}/products.json
+  - GET /search?q={query}&type=product
+  - GET /sitemap.xml
+  format: JSON (Shopify storefront product/collection JSON)
+agent_discovery:
+- /llms.txt
+- /agents.md
+- /.well-known/ucp
+idempotency:
+  documented: false
+pagination:
+  style: Shopify storefront JSON (page/limit query params on *.json endpoints)
+  documented_in_store_llms: false
+error_envelope:
+  mcp: JSON-RPC 2.0 error object (e.g. code -32001 "UCP discovery failed")
+cross_links:
+  mcp: mcp/ttracing-mcp.yml
+  well_known: well-known/ttracing-well-known.yml
+  llms: llms/ttracing-llms.txt
+  domain_security: security/ttracing-domain-security.yml
