@@ -4,7 +4,8 @@ source: >-
   https://ttracing.my/llms.txt, https://ttracing.my/agents.md, and
   https://ttracing.my/.well-known/ucp (probed 2026-07-21)
 name: TTRacing UCP Shopping MCP
-status: active
+status: published
+status_raw: active
 kind: hosted-remote
 transport: streamable-http
 protocol: Universal Commerce Protocol (UCP)
