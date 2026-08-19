@@ -1,8 +1,7 @@
 generated: '2026-07-21'
 method: searched
-source: >-
-  https://ttracing.my/llms.txt, https://ttracing.my/agents.md, and
-  https://ttracing.my/.well-known/ucp (probed 2026-07-21)
+source: https://ttracing.my/llms.txt, https://ttracing.my/agents.md, and https://ttracing.my/.well-known/ucp
+  (probed 2026-07-21)
 name: TTRacing UCP Shopping MCP
 status: published
 status_raw: active
@@ -19,20 +18,14 @@ discovery: https://ttracing.my/.well-known/ucp
 spec: https://ucp.dev/2026-04-08/specification/overview/
 openrpc_schema: https://ucp.dev/2026-04-08/services/shopping/mcp.openrpc.json
 platform: Shopify
-authentication: >-
-  tools/list requires an agent profile URI (UCP discovery handshake). A bare
-  JSON-RPC tools/list without a profile returns error -32001
-  "UCP discovery failed / Missing profile uri". Read-only browsing (below)
-  needs no auth.
+authentication: tools/list requires an agent profile URI (UCP discovery handshake). A bare JSON-RPC tools/list
+  without a profile returns error -32001 "UCP discovery failed / Missing profile uri". Read-only browsing
+  (below) needs no auth.
 verification:
   discovery_http_status: 200
   mcp_endpoint_http_status: 422
-  mcp_endpoint_note: >-
-    Endpoint is live and responds with a UCP JSON-RPC error object requiring an
-    agent profile; full tool schemas are gated behind that handshake.
-# Tool surface documented in llms.txt / agents.md and the UCP capability set in
-# /.well-known/ucp. Names are as published by the provider; input schemas are
-# served by the OpenRPC document above once the profile handshake completes.
+  mcp_endpoint_note: Endpoint is live and responds with a UCP JSON-RPC error object requiring an agent
+    profile; full tool schemas are gated behind that handshake.
 tools:
 - name: search_catalog
   capability: dev.ucp.shopping.catalog.search
@@ -48,9 +41,8 @@ tools:
   description: Set shipping address and fulfillment method on a checkout.
 - name: complete_checkout
   capability: dev.ucp.shopping.checkout
-  description: >-
-    Finalize the purchase. Requires explicit, contemporaneous buyer approval of
-    payment (buyer-approval invariant).
+  description: Finalize the purchase. Requires explicit, contemporaneous buyer approval of payment (buyer-approval
+    invariant).
 capabilities:
 - dev.ucp.shopping.cart
 - dev.ucp.shopping.checkout
@@ -67,3 +59,9 @@ rules:
 - Checkout must not complete payment without explicit buyer consent.
 - MCP endpoint is rate-limited per IP; back off on HTTP 429.
 - Pass context.address_country and context.currency for accurate pricing.
+deployment:
+  mode: remote
+  verified: searched
+  tools: 5
+  checked: '2026-08-12'
+  source: catalog MCP census
