@@ -70,7 +70,6 @@ apis:
     Agent-commerce surface for the TTRacing Shopify store: a hosted UCP shopping
     MCP endpoint plus unauthenticated read-only product/collection JSON browsing.
   humanURL: https://ttracing.my
-  baseURL: https://ttracing.my
   properties:
   - type: MCPServer
     url: mcp/ttracing-mcp.yml
@@ -80,6 +79,9 @@ apis:
     url: well-known/ttracing-well-known.yml
   - type: Conventions
     url: conventions/ttracing-conventions.yml
+  x-surface: platform-generated
+  x-platform: shopify
+  x-platform-surface: ucp
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
